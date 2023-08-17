@@ -1,0 +1,27 @@
+{
+  "name": "vercel-nextjs-javascript",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "autoprefixer": "10.4.14",
+    "clsx": "^1.2.1",
+    "eslint": "8.44.0",
+    "eslint-config-next": "13.4.9",
+    "mysql2": "^3.5.1",
+    "next": "13.4.9",
+    "postcss": "8.4.25",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "tailwindcss": "3.3.2"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.9",
+    "daisyui": "^3.5.1"
+  }
+}
