@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import mysql from 'mysql2';
 
-class DataService {
+export class DataService {
   constructor(
     host = process.env.TIDB_HOST,
     port = process.env.TIDB_PORT,
@@ -30,9 +30,9 @@ class DataService {
     this.pool = pool;
   }
 
-  singleQuery(sql) {
+  singleQuery(sql, ...args) {
     return new Promise((resolve, reject) => {
-      this.pool.query(sql, (err, results, fields) => {
+      this.pool.query(sql, ...args, (err, results, fields) => {
         if (err) {
           reject(err);
         } else {
