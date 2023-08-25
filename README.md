@@ -318,19 +318,25 @@ curl http://localhost:3000/api/crud?init=true
 curl http://localhost:3000/api/crud
 ```
 
-#### 6.3 Get Player by ID
+#### 6.3 Create Player
+
+```bash
+curl -X POST -H "Content-Type: application/json" -d '{"coins":100,"goods":100}' http://localhost:3000/api/crud
+```
+
+#### 6.4 Get Player by ID
 
 ```bash
 curl http://localhost:3000/api/crud?id=1
 ```
 
-#### 6.4 Update Player
+#### 6.5 Update Player
 
 ```bash
 curl -X PUT -H "Content-Type: application/json" -d '{"id":1,"coins":100,"goods":100}' http://localhost:3000/api/crud
 ```
 
-#### 6.5 Delete Player by ID
+#### 6.6 Delete Player by ID
 
 ```bash
 curl -X DELETE -H "Content-Type: application/json" -d '{"id":1}' http://localhost:3000/api/crud
