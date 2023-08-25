@@ -117,7 +117,7 @@ curl http://localhost:3000/api/hello
 
 ## Steps - CRUD
 
-Follow the [steps 1: Clone this repo](#1.-Clone-this-repo), [steps 2: Define Route Handler](#2.-Define-Route-Handler) and [steps 3: Configure Database Connection](#3.-Configure-Database-Connection) above to clone this repo, define route handler and configure database connection.
+Follow the [steps 1: Clone this repo](#1-Clone-this-repo), [steps 2: Define Route Handler](#2-Define-Route-Handler) and [steps 3: Configure Database Connection](#3-Configure-Database-Connection) above to clone this repo, define route handler and configure database connection.
 
 ### 1. Init Database
 
