@@ -44,7 +44,7 @@ export default function Home() {
             }}
           />
         </div>
-        <div className='mx-auto max-w-2xl py-32 sm:py-48 lg:py-56'>
+        <div className='mx-auto max-w-2xl py-24 sm:py-32'>
           <div className='text-center'>
             <h1 className='text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl'>
               How to connect to TiDB using MySQL2 in Next.js?
