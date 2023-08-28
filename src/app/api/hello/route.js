@@ -1,33 +1,9 @@
 import { NextResponse } from 'next/server';
-import mysql from 'mysql2';
+import { getConnection } from '../../../lib/tidb';
 
 export class DataService {
-  constructor(
-    host = process.env.TIDB_HOST,
-    port = process.env.TIDB_PORT,
-    user = process.env.TIDB_USER,
-    password = process.env.TIDB_PASSWORD,
-    database = process.env.TIDB_DB_NAME || 'test'
-  ) {
-    const pool = mysql.createPool({
-      host,
-      port,
-      user,
-      password,
-      database,
-      ssl: {
-        minVersion: 'TLSv1.2',
-        rejectUnauthorized: true,
-      },
-      waitForConnections: true,
-      connectionLimit: 1,
-      maxIdle: 1, // max idle connections, the default value is the same as `connectionLimit`
-      idleTimeout: 60000, // idle connections timeout, in milliseconds, the default value 60000
-      queueLimit: 0,
-      enableKeepAlive: true,
-      keepAliveInitialDelay: 0,
-    });
-    this.pool = pool;
+  constructor() {
+    this.pool = getConnection();
   }
 
   singleQuery(sql, ...args) {
@@ -63,7 +39,5 @@ export async function GET(request) {
     return NextResponse.json({ results });
   } catch (error) {
     return NextResponse.error(error);
-  } finally {
-    await dataService.close();
   }
 }
