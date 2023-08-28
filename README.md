@@ -34,23 +34,36 @@ Example File: [`src/app/api/hello/route.js`](src/app/api/hello/route.js)
 
 ### 3. Configure Database Connection
 
-Refer to [`src/app/api/hello/route.js#L4`](src/app/api/hello/route.js#L4)
+Refer to [`src/lib/tidb.js`](src/lib/tidb.js)
 
 ```javascript
 import mysql from 'mysql2';
 
-const pool = mysql.createPool({
-  host, // TiDB Serverless cluster endpoint
-  port, // TiDB Serverless cluster port, 4000 is the default
-  user, // TiDB Serverless cluster user
-  password, // TiDB Serverless cluster password
-  database, // TiDB Serverless cluster database, 'test' is the default
-  ssl: {  // TiDB Serverless cluster SSL config(required)
-    minVersion: 'TLSv1.2',
-    rejectUnauthorized: true,
-  },
-  ... // other mysql2 config
-});
+let pool = null;
+
+export function connect() {
+  pool = mysql.createPool({
+    host: process.env.TIDB_HOST, // TiDB host, for example: {gateway-region}.aws.tidbcloud.com
+    port: process.env.TIDB_PORT || 4000, // TiDB port, default: 4000
+    user: process.env.TIDB_USER, // TiDB user, for example: {prefix}.root
+    password: process.env.TIDB_PASSWORD, // TiDB password
+    database: process.env.TIDB_DATABASE || 'test', // TiDB database name, default: test
+    ssl: {
+      minVersion: 'TLSv1.2',
+      rejectUnauthorized: true,
+    },
+    connectionLimit: 1, // Setting connectionLimit to "1" in a serverless function environment optimizes resource usage, reduces costs, ensures connection stability, and enables seamless scalability.
+    maxIdle: 1, // max idle connections, the default value is the same as `connectionLimit`
+    enableKeepAlive: true,
+  });
+}
+
+export function getConnection() {
+  if (!pool) {
+    pool = createPool();
+  }
+  return pool;
+}
 ```
 
 ### 4. Configure Environment Variables
@@ -68,7 +81,7 @@ TIDB_PASSWORD="your_tidb_serverless_cluster_password"
 
 ### 5. Define Database Query
 
-Refer to [`src/app/api/hello/route.js#L33`](src/app/api/hello/route.js#L33)
+Refer to [`src/app/api/hello/route.js#L9`](src/app/api/hello/route.js#L9)
 
 ```javascript
   singleQuery(sql, ...args) {
@@ -86,7 +99,7 @@ Refer to [`src/app/api/hello/route.js#L33`](src/app/api/hello/route.js#L33)
 
 ### 6. Define Route Handler
 
-Refer to [`src/app/api/hello/route.js#L58`](src/app/api/hello/route.js#L58)
+Refer to [`src/app/api/hello/route.js#L34`](src/app/api/hello/route.js#L34)
 
 ```javascript
 import { NextResponse } from 'next/server';
@@ -150,7 +163,7 @@ Refer to [`src/app/api/crud/route.js#L56`](src/app/api/crud/route.js#L56)
   }
 ```
 
-Handler: [`src/app/api/crud/route.js#L135`](src/app/api/crud/route.js#L135)
+Handler: [`src/app/api/crud/route.js#L133`](src/app/api/crud/route.js#L133)
 
 ```javascript
 export async function POST(request) {
@@ -234,7 +247,7 @@ Refer to [`src/app/api/crud/route.js#L84`](src/app/api/crud/route.js#L84)
   }
 ```
 
-Handler: [`src/app/api/crud/route.js#L154`](src/app/api/crud/route.js#L154)
+Handler: [`src/app/api/crud/route.js#L150`](src/app/api/crud/route.js#L150)
 
 ```javascript
 export async function PUT(request) {
@@ -271,7 +284,7 @@ Refer to [`src/app/api/crud/route.js#L97`](src/app/api/crud/route.js#L97)
   }
 ```
 
-Handler: [`src/app/api/crud/route.js#L173`](src/app/api/crud/route.js#L173)
+Handler: [`src/app/api/crud/route.js#L167`](src/app/api/crud/route.js#L167)
 
 ```javascript
 export async function DELETE(request) {

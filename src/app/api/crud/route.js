@@ -127,8 +127,6 @@ export async function GET(request) {
     return NextResponse.json({ results });
   } catch (error) {
     return NextResponse.error(error);
-  } finally {
-    await crudDataService.close();
   }
 }
 
@@ -146,8 +144,6 @@ export async function POST(request) {
     return NextResponse.json({ results });
   } catch (error) {
     return NextResponse.error(error);
-  } finally {
-    await crudDataService.close();
   }
 }
 
@@ -165,8 +161,6 @@ export async function PUT(request) {
     return NextResponse.json({ results });
   } catch (error) {
     return NextResponse.error(error);
-  } finally {
-    await crudDataService.close();
   }
 }
 
@@ -184,7 +178,5 @@ export async function DELETE(request) {
     return NextResponse.json({ results });
   } catch (error) {
     return NextResponse.error(error);
-  } finally {
-    await crudDataService.close();
   }
 }
