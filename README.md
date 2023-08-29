@@ -42,7 +42,7 @@ import mysql from 'mysql2';
 let pool = null;
 
 export function connect() {
-  pool = mysql.createPool({
+  return mysql.createPool({
     host: process.env.TIDB_HOST, // TiDB host, for example: {gateway-region}.aws.tidbcloud.com
     port: process.env.TIDB_PORT || 4000, // TiDB port, default: 4000
     user: process.env.TIDB_USER, // TiDB user, for example: {prefix}.root
@@ -60,7 +60,7 @@ export function connect() {
 
 export function getConnection() {
   if (!pool) {
-    pool = createPool();
+    pool = connect();
   }
   return pool;
 }
